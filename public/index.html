@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <div id="g_id_onload"
+        data-client_id="210534715330-hej3jpvufoaiuf6ui4smlst482mpmj4j.apps.googleusercontent.com"
+        data-context="signin"
+        data-ux_mode="popup"
+        data-callback="handleCredentialResponse">
+    </div>
+
     <!-- Landing Page -->
     <div id="landing-page" class="page active">
         <div class="container">
@@ -117,7 +125,17 @@
                             <span class="btn-text">Authenticate</span>
                             <span class="btn-spinner hidden"></span>
                         </button>
-                        
+
+                        <div class="g_id_signin"
+                            data-type="standard"
+                            data-shape="rectangular"
+                            data-theme="outline"
+                            data-text="sign_in_with"
+                            data-size="large"
+                            data-logo_alignment="left">
+                        </div>
+
+                    
                         <div id="student-login-error" class="error-message"></div>
                         
                         <div class="demo-credentials">
@@ -131,14 +149,6 @@
             </div>
         </div>
         <!-- <div class="g_id_signin" data-type="standard"></div> -->
-        <div class="g_id_signin"
-            data-type="standard"
-            data-shape="rectangular"
-            data-theme="outline"
-            data-text="sign_in_with"
-            data-size="large"
-            data-logo_alignment="left">
-        </div>
 
     </div>
 
@@ -480,12 +490,12 @@
 
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-    <div id="g_id_onload"
+    <!-- <div id="g_id_onload"
         data-client_id="210534715330-hej3jpvufoaiuf6ui4smlst482mpmj4j.apps.googleusercontent.com"
         data-context="signup"
         data-ux_mode="popup"
         data-callback="handleCredentialResponse">
-    </div>
+    </div> -->
 
     
 
