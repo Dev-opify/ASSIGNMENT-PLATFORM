@@ -467,5 +467,37 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js"></script>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <div id="g_id_onload"
+        data-client_id="210534715330-hej3jpvufoaiuf6ui4smlst482mpmj4j.apps.googleusercontent.com"
+        data-context="signup"
+        data-ux_mode="popup"
+        data-callback="handleCredentialResponse">
+    </div>
+
+    <div class="g_id_signin" data-type="standard"></div>
+
+    <script>
+        function handleCredentialResponse(response) {
+            // Send the token to backend for verification and signup/login
+            fetch('/api/auth/google', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: response.credential })
+            })
+            .then(res => res.json())
+            .then(data => {
+            if (data.success) {
+                // Handle login success (e.g., redirect to dashboard)
+            } else {
+                // Handle error
+            }
+            });
+        }
+    </script>
+
+
 </body>
 </html>

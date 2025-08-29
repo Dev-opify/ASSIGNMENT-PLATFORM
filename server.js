@@ -435,3 +435,31 @@ process.on('SIGINT', () => {
         process.exit(0);
     });
 });
+
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client('210534715330-hej3jpvufoaiuf6ui4smlst482mpmj4j.apps.googleusercontent.com');
+
+app.post('/api/auth/google', async (req, res) => {
+  const { token } = req.body;
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: '210534715330-hej3jpvufoaiuf6ui4smlst482mpmj4j.apps.googleusercontent.com'
+    });
+    const payload = ticket.getPayload();
+    const email = payload.email;
+
+    // Check if user exists in DB
+    const user = await findUserByEmail(email); // Implement this function
+
+    if (!user) {
+      // Create new student user in DB
+      await createUser({ email, role: 'student', name: payload.name }); // Implement createUser
+    }
+
+    // Generate session/auth token and respond success
+    res.json({ success: true });
+  } catch (error) {
+    res.status(401).json({ success: false, error: 'Invalid token' });
+  }
+});

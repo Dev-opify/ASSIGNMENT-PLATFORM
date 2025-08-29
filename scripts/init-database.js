@@ -98,9 +98,9 @@ async function insertSampleData() {
     const users = [
         {
             id: uuidv4(),
-            email: 'prof.smith@university.edu',
+            email: 'admin@iilm.edu',
             password_hash: hashedPassword,
-            name: 'Dr. Sarah Smith',
+            name: 'Dr. Surabhi Purwar',
             role: 'professor'
         },
         {
@@ -130,33 +130,33 @@ async function insertSampleData() {
     const professor = users.find(u => u.role === 'professor');
     const student1 = users.find(u => u.email === 'john.doe@university.edu');
 
-    // Sample assignments
-    const assignments = [
-        {
-            id: uuidv4(),
-            title: 'Web Development Project',
-            description: 'Create a responsive website using HTML, CSS, and JavaScript. Include at least 3 pages and implement modern design principles. Focus on accessibility, performance, and mobile-first design.',
-            deadline: '2025-09-15T23:59:59',
-            instructions: 'Submit your GitHub repository link containing the complete project code. Ensure your README.md includes setup instructions and project description.',
-            created_by: professor.id
-        },
-        {
-            id: uuidv4(),
-            title: 'Database Design Assignment',
-            description: 'Design and implement a normalized database schema for a library management system. Include entity relationships, constraints, and sample data.',
-            deadline: '2025-09-20T23:59:59',
-            instructions: 'Include ER diagram, SQL scripts, and comprehensive documentation in your repository. Add sample queries demonstrating database functionality.',
-            created_by: professor.id
-        },
-        {
-            id: uuidv4(),
-            title: 'Algorithm Analysis Report',
-            description: 'Analyze the time and space complexity of various sorting algorithms. Implement at least 3 different sorting algorithms and compare their performance.',
-            deadline: '2025-09-25T23:59:59',
-            instructions: 'Submit code implementations with detailed analysis report. Include performance benchmarks and complexity analysis.',
-            created_by: professor.id
-        }
-    ];
+    // // Sample assignments
+    // const assignments = [
+    //     {
+    //         id: uuidv4(),
+    //         title: 'Web Development Project',
+    //         description: 'Create a responsive website using HTML, CSS, and JavaScript. Include at least 3 pages and implement modern design principles. Focus on accessibility, performance, and mobile-first design.',
+    //         deadline: '2025-09-15T23:59:59',
+    //         instructions: 'Submit your GitHub repository link containing the complete project code. Ensure your README.md includes setup instructions and project description.',
+    //         created_by: professor.id
+    //     },
+    //     {
+    //         id: uuidv4(),
+    //         title: 'Database Design Assignment',
+    //         description: 'Design and implement a normalized database schema for a library management system. Include entity relationships, constraints, and sample data.',
+    //         deadline: '2025-09-20T23:59:59',
+    //         instructions: 'Include ER diagram, SQL scripts, and comprehensive documentation in your repository. Add sample queries demonstrating database functionality.',
+    //         created_by: professor.id
+    //     },
+    //     {
+    //         id: uuidv4(),
+    //         title: 'Algorithm Analysis Report',
+    //         description: 'Analyze the time and space complexity of various sorting algorithms. Implement at least 3 different sorting algorithms and compare their performance.',
+    //         deadline: '2025-09-25T23:59:59',
+    //         instructions: 'Submit code implementations with detailed analysis report. Include performance benchmarks and complexity analysis.',
+    //         created_by: professor.id
+    //     }
+    // ];
 
     // Insert assignments
     const insertAssignment = db.prepare('INSERT OR REPLACE INTO assignments (id, title, description, deadline, instructions, created_by) VALUES (?, ?, ?, ?, ?, ?)');
@@ -166,15 +166,15 @@ async function insertSampleData() {
     insertAssignment.finalize();
 
     // Sample submission
-    const submissions = [
-        {
-            id: uuidv4(),
-            assignment_id: assignments[0].id,
-            student_id: student1.id,
-            repo_link: 'https://github.com/johndoe/web-development-project',
-            status: 'submitted'
-        }
-    ];
+    // const submissions = [
+    //     {
+    //         id: uuidv4(),
+    //         assignment_id: assignments[0].id,
+    //         student_id: student1.id,
+    //         repo_link: 'https://github.com/johndoe/web-development-project',
+    //         status: 'submitted'
+    //     }
+    // ];
 
     // Insert submissions
     const insertSubmission = db.prepare('INSERT OR REPLACE INTO submissions (id, assignment_id, student_id, repo_link, status) VALUES (?, ?, ?, ?, ?)');
