@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSubmit - Assignment Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landing-page" class="page active">
+        <div class="container">
+            <div class="landing-content">
+                <div class="hero-section">
+                    <h1 class="hero-title">EduSubmit</h1>
+                    <p class="hero-subtitle">Assignment Submission Platform</p>
+                    <!-- <div class="server-status">
+                        <div class="status-indicator">
+                            <div class="status-dot active"></div>
+                            <span>Database Connected</span>
+                        </div>
+                        <div class="status-indicator">
+                            <div class="status-dot active"></div>
+                            <span>API Server Online</span>
+                        </div>
+                    </div> -->
+                </div>
+                
+                <div class="role-selection">
+                    <h2>Select Your Role</h2>
+                    <div class="role-cards">
+                        <div class="role-card" id="professor-role">
+                            <div class="role-icon">👩‍🏫</div>
+                            <h3>Professor</h3>
+                            <p>Full admin access to assignments and submissions</p>
+                            <button class="btn btn--primary">Login as Professor</button>
+                        </div>
+                        
+                        <div class="role-card" id="student-role">
+                            <div class="role-icon">👨‍🎓</div>
+                            <h3>Student</h3>
+                            <p>Access assignments and submit your work</p>
+                            <button class="btn btn--primary">Login as Student</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professor Login Page -->
+    <div id="professor-login-page" class="page">
+        <div class="container">
+            <div class="login-container">
+                <div class="login-form-wrapper">
+                    <button class="back-btn" id="back-to-landing-prof">← Back</button>
+                    <div class="login-header">
+                        <h2>Professor Authentication</h2>
+                        <p>Secure database login with bcrypt encryption</p>
+                    </div>
+                    
+                    <form id="professor-login-form" class="login-form">
+                        <div class="form-group">
+                            <label class="form-label" for="prof-email">Email Address</label>
+                            <input type="email" id="prof-email" class="form-control" 
+                                   placeholder="professor@university.edu" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="prof-password">Password</label>
+                            <input type="password" id="prof-password" class="form-control" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn--primary btn--full-width">
+                            <span class="btn-text">Authenticate</span>
+                            <span class="btn-spinner hidden"></span>
+                        </button>
+                        
+                        <div id="prof-login-error" class="error-message"></div>
+                        
+                        <div class="demo-credentials">
+                            <p><strong>Demo Database Credentials:</strong></p>
+                            <p>Email: prof.smith@university.edu</p>
+                            <p>Password: password123</p>
+                            <small>Password stored with bcrypt hashing</small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Login Page -->
+    <div id="student-login-page" class="page">
+        <div class="container">
+            <div class="login-container">
+                <div class="login-form-wrapper">
+                    <button class="back-btn" id="back-to-landing-student">← Back</button>
+                    <div class="login-header">
+                        <h2>Student Authentication</h2>
+                        <p>Login with university credentials from database</p>
+                    </div>
+                    
+                    <form id="student-login-form" class="login-form">
+                        <div class="form-group">
+                            <label class="form-label" for="student-email">University Email</label>
+                            <input type="email" id="student-email" class="form-control" 
+                                   placeholder="student@university.edu" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="student-password">Password</label>
+                            <input type="password" id="student-password" class="form-control" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn--primary btn--full-width">
+                            <span class="btn-text">Authenticate</span>
+                            <span class="btn-spinner hidden"></span>
+                        </button>
+                        
+                        <div id="student-login-error" class="error-message"></div>
+                        
+                        <div class="demo-credentials">
+                            <p><strong>Demo Database Accounts:</strong></p>
+                            <p>john.doe@university.edu / password123</p>
+                            <p>jane.smith@university.edu / password123</p>
+                            <small>All passwords encrypted in SQLite database</small>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Professor Dashboard -->
+    <div id="professor-dashboard" class="page">
+        <nav class="navbar">
+            <div class="nav-content">
+                <div class="nav-brand">
+                    <h3>EduSubmit - Database Dashboard</h3>
+                    <div class="realtime-indicator">
+                        <div class="pulse-dot"></div>
+                        <span>Real-time Updates Active</span>
+                    </div>
+                </div>
+                <div class="nav-user">
+                    <span id="prof-name-display"></span>
+                    <button class="btn btn--outline btn--sm" id="prof-logout">Logout</button>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="container">
+            <div class="dashboard-header">
+                <div class="db-stats">
+                    <div class="db-stat">
+                        <span class="db-stat-label">Total Users</span>
+                        <span class="db-stat-value" id="total-users">0</span>
+                    </div>
+                    <div class="db-stat">
+                        <span class="db-stat-label">Active Sessions</span>
+                        <span class="db-stat-value" id="active-sessions">1</span>
+                    </div>
+                    <div class="db-stat">
+                        <span class="db-stat-label">Database Size</span>
+                        <span class="db-stat-value">2.4 MB</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" data-tab="assignments">Assignments</button>
+                <button class="tab-btn" data-tab="submissions">Submissions</button>
+                <button class="tab-btn" data-tab="create">Create</button>
+                <button class="tab-btn" data-tab="analytics">Analytics</button>
+            </div>
+            
+            <!-- Assignments Tab -->
+            <div id="assignments-tab" class="tab-content active">
+                <div class="section-header">
+                    <h2>Assignment Management</h2>
+                    <div class="section-actions">
+                        <button class="btn btn--secondary btn--sm" id="sync-db">Sync Database</button>
+                        <button class="btn btn--primary" id="new-assignment-btn">+ New Assignment</button>
+                    </div>
+                </div>
+                
+                <div id="assignments-list" class="assignments-grid">
+                    <!-- Assignments populated from database -->
+                </div>
+            </div>
+            
+            <!-- Submissions Tab -->
+            <div id="submissions-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Submission Database</h2>
+                    <div class="submission-filters">
+                        <select id="status-filter" class="form-control">
+                            <option value="all">All Statuses</option>
+                            <option value="submitted">Submitted</option>
+                            <option value="graded">Graded</option>
+                            <option value="late">Late</option>
+                        </select>
+                        <button class="btn btn--outline btn--sm" id="export-csv">Export CSV</button>
+                    </div>
+                </div>
+                
+                <div class="database-table-wrapper">
+                    <table class="database-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Student</th>
+                                <th>Assignment</th>
+                                <th>Repository</th>
+                                <th>Submitted</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="submissions-table-body">
+                            <!-- Database records populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Create Assignment Tab -->
+            <div id="create-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Create Assignment</h2>
+                    <p>Data will be stored with auto-generated ID in SQLite database</p>
+                </div>
+                
+                <form id="create-assignment-form" class="assignment-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="assignment-title">Assignment Title</label>
+                            <input type="text" id="assignment-title" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="assignment-deadline">Deadline</label>
+                            <input type="datetime-local" id="assignment-deadline" class="form-control" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="assignment-description">Description</label>
+                        <textarea id="assignment-description" class="form-control" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="assignment-instructions">Instructions</label>
+                        <textarea id="assignment-instructions" class="form-control" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn--secondary" id="reset-form">Reset</button>
+                        <button type="submit" class="btn btn--primary">
+                            <span class="btn-text">Save to Database</span>
+                            <span class="btn-spinner hidden"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Analytics Tab -->
+            <!-- <div id="analytics-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Database Analytics</h2>
+                </div>
+                
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3>Submission Timeline</h3>
+                        <div class="chart-container" style="height: 300px; position: relative;">
+                            <canvas id="submission-chart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="analytics-card">
+                        <h3>Database Health</h3>
+                        <div class="health-metrics">
+                            <div class="metric">
+                                <span class="metric-label">Query Performance</span>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" style="width: 92%"></div>
+                                </div>
+                                <span class="metric-value">92%</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Connection Pool</span>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" style="width: 78%"></div>
+                                </div>
+                                <span class="metric-value">78%</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Index Usage</span>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" style="width: 85%"></div>
+                                </div>
+                                <span class="metric-value">85%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+    <!-- Student Dashboard -->
+    <div id="student-dashboard" class="page">
+        <nav class="navbar">
+            <div class="nav-content">
+                <div class="nav-brand">
+                    <h3>EduSubmit - Student Portal</h3>
+                    <div class="realtime-indicator">
+                        <div class="pulse-dot"></div>
+                        <span>Live Updates</span>
+                    </div>
+                </div>
+                <div class="nav-user">
+                    <span id="student-name-display"></span>
+                    <button class="btn btn--outline btn--sm" id="student-logout">Logout</button>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="container">
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" data-tab="available">Available</button>
+                <button class="tab-btn" data-tab="my-submissions">My Submissions</button>
+                <button class="tab-btn" data-tab="profile">Profile</button>
+            </div>
+            
+            <!-- Available Assignments Tab -->
+            <div id="available-tab" class="tab-content active">
+                <div class="section-header">
+                    <h2>Available Assignments</h2>
+                    <div class="assignment-stats">
+                        <div class="stat-card">
+                            <span class="stat-number" id="total-assignments">0</span>
+                            <span class="stat-label">Total</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="submitted-count">0</span>
+                            <span class="stat-label">Submitted</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="pending-count">0</span>
+                            <span class="stat-label">Pending</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="student-assignments-list" class="assignments-grid">
+                    <!-- Assignments loaded from database -->
+                </div>
+            </div>
+            
+            <!-- My Submissions Tab -->
+            <div id="my-submissions-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>My Submission History</h2>
+                </div>
+                
+                <div id="my-submissions-list" class="submissions-list">
+                    <!-- Personal submissions from database -->
+                </div>
+            </div>
+            
+            <!-- Profile Tab -->
+            <div id="profile-tab" class="tab-content">
+                <div class="section-header">
+                    <h2>Student Profile</h2>
+                </div>
+                
+                <div class="profile-card">
+                    <div class="profile-info">
+                        <div class="profile-field">
+                            <label>Student ID:</label>
+                            <span id="profile-student-id"></span>
+                        </div>
+                        <div class="profile-field">
+                            <label>Email:</label>
+                            <span id="profile-email"></span>
+                        </div>
+                        <div class="profile-field">
+                            <label>Name:</label>
+                            <span id="profile-name"></span>
+                        </div>
+                        <div class="profile-field">
+                            <label>Account Created:</label>
+                            <span id="profile-created"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submission Modal -->
+    <div id="submission-modal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-assignment-title">Submit Assignment</h3>
+                <button class="modal-close" id="close-submission-modal">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="submission-form">
+                    <input type="hidden" id="modal-assignment-id">
+                    
+                    <div class="assignment-details">
+                        <p><strong>Assignment:</strong></p>
+                        <p id="modal-assignment-description"></p>
+                        
+                        <p><strong>Instructions:</strong></p>
+                        <p id="modal-assignment-instructions"></p>
+                        
+                        <p><strong>Deadline:</strong> <span id="modal-assignment-deadline"></span></p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="repo-link">GitHub Repository URL</label>
+                        <input type="url" id="repo-link" class="form-control" 
+                               placeholder="https://github.com/username/repository" required>
+                        <small class="form-help">Repository will be validated and stored in database</small>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn--secondary" id="cancel-submission">Cancel</button>
+                        <button type="submit" class="btn btn--primary" id="submit-assignment">
+                            <span class="btn-text">Submit to Database</span>
+                            <span class="btn-spinner hidden"></span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Real-time Updates Toast -->
+    <!-- <div id="realtime-toast" class="realtime-toast hidden">
+        <div class="toast-content">
+            <div class="toast-icon">📊</div>
+            <div class="toast-message">
+                <strong>Real-time Update</strong>
+                <span id="toast-text">Database synchronized</span>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p id="loading-text">Connecting to database...</p>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
