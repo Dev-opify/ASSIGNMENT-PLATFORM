@@ -159,11 +159,11 @@ async function insertSampleData() {
     // ];
 
     // Insert assignments
-    const insertAssignment = db.prepare('INSERT OR REPLACE INTO assignments (id, title, description, deadline, instructions, created_by) VALUES (?, ?, ?, ?, ?, ?)');
-    for (const assignment of assignments) {
-        insertAssignment.run([assignment.id, assignment.title, assignment.description, assignment.deadline, assignment.instructions, assignment.created_by]);
-    }
-    insertAssignment.finalize();
+    // const insertAssignment = db.prepare('INSERT OR REPLACE INTO assignments (id, title, description, deadline, instructions, created_by) VALUES (?, ?, ?, ?, ?, ?)');
+    // for (const assignment of assignments) {
+    //     insertAssignment.run([assignment.id, assignment.title, assignment.description, assignment.deadline, assignment.instructions, assignment.created_by]);
+    // }
+    // insertAssignment.finalize();
 
     // Sample submission
     // const submissions = [
@@ -177,11 +177,11 @@ async function insertSampleData() {
     // ];
 
     // Insert submissions
-    const insertSubmission = db.prepare('INSERT OR REPLACE INTO submissions (id, assignment_id, student_id, repo_link, status) VALUES (?, ?, ?, ?, ?)');
-    for (const submission of submissions) {
-        insertSubmission.run([submission.id, submission.assignment_id, submission.student_id, submission.repo_link, submission.status]);
-    }
-    insertSubmission.finalize();
+    // const insertSubmission = db.prepare('INSERT OR REPLACE INTO submissions (id, assignment_id, student_id, repo_link, status) VALUES (?, ?, ?, ?, ?)');
+    // for (const submission of submissions) {
+    //     insertSubmission.run([submission.id, submission.assignment_id, submission.student_id, submission.repo_link, submission.status]);
+    // }
+    // insertSubmission.finalize();
 }
 
 // Run initialization
